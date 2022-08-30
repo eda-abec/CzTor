@@ -1,0 +1,27 @@
+#!/usr/bin/env ./Browser/execdesktop
+# CzTor
+# author: eda-abec
+# 2022
+#
+# A .desktop file for Tor Browser with exit node in specified country (Czech Republic by default)
+
+# place this file into tor browser root directory (beside the start-tor-browser.desktop)
+# to specify different exit node country, change the "ExitNodes {cz}" accordingly
+#
+# it does 3 steps:
+#  1) adds two lines:
+#       ExitNodes {cz}
+#       StrictNodes 1
+#     to torrc file
+#  2) starts the browser
+#  3) removes the lines from step 1
+
+[Desktop Entry]
+Type=Application
+Name=CzTor
+GenericName=Web Browser
+Comment=Tor Browser with exit node in Czech Republic
+Categories=Network;WebBrowser;Security;
+Exec=sh -c 'echo "ExitNodes {cz}\nStrictNodes 1" >> "$(dirname "$1")"/Browser/TorBrowser/Data/Tor/torrc && "$(dirname "$1")"/Browser/start-tor-browser; head -n-2 "$(dirname "$1")"/Browser/TorBrowser/Data/Tor/torrc > "$(dirname "$1")"/Browser/TorBrowser/Data/Tor/torrc' dummy %k
+Icon=Browser/browser/chrome/icons/default/default128.png
+StartupWMClass=Tor Browser
